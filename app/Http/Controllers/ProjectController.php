@@ -62,7 +62,7 @@ class ProjectController extends Controller
         Project::create($data);
 
         return to_route('project.index')
-            ->with('success', 'Project was created');
+            ->with('success', 'Project created successfully!');
     }
 
     /**
@@ -112,6 +112,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $name = $project->name;
+        $project->delete();
+
+        return to_route('project.index')
+            ->with('success', "Project \"$name\" deleted successfully");
     }
 }
