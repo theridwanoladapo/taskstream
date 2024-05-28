@@ -9,6 +9,11 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'image_path', 'name', 'description', 'status', 'due_date',
+        'priority', 'assigned_user_id', 'created_by', 'updated_by', 'project_id'
+    ];
+
     public function project()
     {
         return $this->belongsTo(Project::class);
