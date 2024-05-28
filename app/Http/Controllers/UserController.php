@@ -92,7 +92,7 @@ class UserController extends Controller
         $user->update($data);
 
         return to_route('user.index')
-            ->with('success', "Project \"$user->name\" updated successfully!");
+            ->with('success', "User \"$user->name\" updated successfully!");
     }
 
     /**
@@ -100,6 +100,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $name = $user->name;
+        $user->delete();
+
+        return to_route('user.index')
+            ->with('success', "User \"$name\" deleted successfully");
     }
 }
