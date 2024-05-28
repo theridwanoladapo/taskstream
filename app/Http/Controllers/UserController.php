@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserCrudResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -50,6 +51,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
+        $data['email_verified_at'] = time();
         $data['password'] = bcrypt($data['password']);
         User::create($data);
 
@@ -70,7 +72,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return inertia('User/Edit', [
+            'user' => new UserCrudResource($user),
+        ]);
     }
 
     /**
@@ -78,7 +82,17 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $data = $request->validated();
+        $password = bcrypt($data['password']);
+        if ($password) {
+            $data['password'] = bcrypt($password);
+        } else {
+            unset($data['password']);
+        }
+        $user->update($data);
+
+        return to_route('user.index')
+            ->with('success', "Project \"$user->name\" updated successfully!");
     }
 
     /**
