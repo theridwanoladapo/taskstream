@@ -167,7 +167,11 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
                                 {!hideProjectColumn && (
                                     <td className="px-3 py-3">{task.project.name}</td>
                                 )}
-                                <td className="px-3 py-3 text-nowrap">{task.name}</td>
+                                <td className="px-3 py-3 text-gray-100 hover:underline">
+                                    <Link href={route('task.show', task.id)}>
+                                        {task.name}
+                                    </Link>
+                                </td>
                                 <td className="px-3 py-3 text-nowrap">
                                     <span
                                         className={
