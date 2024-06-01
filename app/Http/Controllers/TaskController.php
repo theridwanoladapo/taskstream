@@ -34,7 +34,7 @@ class TaskController extends Controller
         }
 
         $tasks = $query->orderBy($sortField, $sortDirection)
-        ->paginate(10)->onEachSide(1);
+        ->paginate(10)->onEachSide(1)->withQueryString();
 
         return inertia("Task/Index", [
             'tasks' => TaskResource::collection($tasks),
@@ -151,7 +151,7 @@ class TaskController extends Controller
         }
 
         $tasks = $query->orderBy($sortField, $sortDirection)
-        ->paginate(10)->onEachSide(1);
+        ->paginate(10)->onEachSide(1)->withQueryString();
 
         return inertia("Task/Index", [
             'tasks' => TaskResource::collection($tasks),
